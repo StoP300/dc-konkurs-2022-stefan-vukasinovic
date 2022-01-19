@@ -1,0 +1,26 @@
+.wrap {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  right: 0;
+  justify-content: flex-end;
+  padding-right: 1rem;
+}
+
+
+.btn { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #18cdca;
+  border: none;
+  height: 2.3rem;
+  width: 6rem;
+  border-radius: 5px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgb(113, 113, 240);
+}
