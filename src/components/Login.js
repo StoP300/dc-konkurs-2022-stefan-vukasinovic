@@ -20,7 +20,7 @@ export default function Login() {
       username: email,
       password,
     };
-
+    setLoading(false);
     axios
       .post("/api/login", JSON.stringify(authData), {
         mode: "no-cors",
@@ -33,10 +33,12 @@ export default function Login() {
         authCtx.login(response.data.token);
 
         // localStorage.setItem("token", response.data.token);
+      })
+      .catch((err) => {
+        alert("Invalid username or password");
+        setLoading(false);
       });
-    setLoading(true).catch((error) => {
-      console.log(error);
-    });
+    setLoading(true);
   };
 
   return (
