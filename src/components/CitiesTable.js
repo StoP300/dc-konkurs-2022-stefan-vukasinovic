@@ -16,11 +16,12 @@ import { Box } from "@mui/system";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import LinearProgress from "@mui/material/LinearProgress";
+// import ReactPaginate from "react-paginate";
 // import Pagination from "@mui/material/Pagination";
 // import Stack from "@mui/material/Stack";
 
 import "./CitiesTable.scss";
-import { Pages } from "@material-ui/icons";
+// import { Pages } from "@material-ui/icons";
 const style = {
   position: "absolute",
   top: "50%",
@@ -36,7 +37,6 @@ export default function CitiesTable() {
   const authCtx = useContext(AuthContext);
   const searchCtx = useContext(SearchContext);
   const [loading, isLoading] = useState(false);
-  // const [page, setPages] = useState([]);
   function createData(id, name, capital, lat, lon, population) {
     return { id, name, capital, lat, lon, population };
   }
@@ -63,18 +63,6 @@ export default function CitiesTable() {
       .then((res) => {
         console.log(res);
         const tmp = [];
-        // const pgs = [];
-        // res.data.summary.map((page) => {
-        //   pgs.push(
-        //     createData(
-        //       page.count,
-        //       page.next,
-        //       page.page,
-        //       page.previous,
-        //       page.total_pages
-        //     )
-        //   );
-        // });
         res.data.map((city) => {
           tmp.push(
             createData(
@@ -89,7 +77,6 @@ export default function CitiesTable() {
         });
         isLoading(false);
         setRows(tmp);
-        // setPages(pgs);
       })
       .catch((error) => {
         console.log(error);
@@ -196,7 +183,7 @@ export default function CitiesTable() {
                         e.stopPropagation();
                         e.preventDefault();
                       }}
-                      disable
+                      disable="true"
                       checked={row.capital}
                     />
                   </TableCell>
@@ -213,13 +200,17 @@ export default function CitiesTable() {
         </TableContainer>
       )}
 
-      <div className="pagination">
-        {/* {page.map((pag) => {
-          // <Stack spacing={1}>
-          //   <Pagination count={pag.count} />
-          // </Stack>;
-        })} */}
-      </div>
+      {/* <div className="pagination">
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          pageCount={20}
+          marginPagesDisplayed={3}
+          pageRangeDisplayed={6}
+          onPageChange={getCities}
+        />
+      </div> */}
 
       <Modal
         open={open}

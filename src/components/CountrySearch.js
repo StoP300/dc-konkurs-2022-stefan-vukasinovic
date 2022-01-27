@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { Autocomplete, TextField, Box } from "@mui/material";
 import AuthContext from "../store/auth-context";
 import SearchContext from "../store/searchContext";
@@ -8,6 +8,18 @@ import axios from "axios";
 export default function CountrySearch() {
   const authCtx = useContext(AuthContext);
   const searchCtx = useContext(SearchContext);
+
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, 400);
+    };
+  };
 
   const [countries, setCountries] = useState([]);
   const [value, setValue] = useState(countries[0]);
@@ -28,6 +40,8 @@ export default function CountrySearch() {
     console.log(v);
     searchCtx.setSearchValue(v.id);
   };
+
+  const optimizedVersion = useCallback(debounce(getCountries), []);
 
   return (
     <div className="header">
@@ -62,7 +76,7 @@ export default function CountrySearch() {
           <TextField
             {...params}
             onChange={(e) => {
-              getCountries(e.target.value);
+              optimizedVersion(e.target.value);
             }}
             label="Choose a country"
             inputProps={{
